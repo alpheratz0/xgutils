@@ -30,6 +30,20 @@ frand(void)
 	return ((float)(rand())) / RAND_MAX;
 }
 
+static void
+usage(void)
+{
+	puts("usage: xggen [-hv] [-c COLUMNS] [-r ROWS] [-p ALIVE_PROBABILITY]");
+	exit(0);
+}
+
+static void
+version(void)
+{
+	puts("xggen version "VERSION);
+	exit(0);
+}
+
 int
 main(int argc, char **argv)
 {
@@ -41,12 +55,24 @@ main(int argc, char **argv)
 	p = DEFAULT_ALIVE_PROB;
 
 	for (--argc, ++argv; argc > 1; --argc, ++argv) {
-		if (strcmp(*argv, "-r") == 0) --argc, r = atoi(*++argv);
+		if (strcmp(*argv, "-h") == 0) usage();
+		else if (strcmp(*argv, "-v") == 0) version();
+		else if (strcmp(*argv, "-r") == 0) --argc, r = atoi(*++argv);
 		else if (strcmp(*argv, "-c") == 0) --argc, c = atoi(*++argv);
 		else if (strcmp(*argv, "-p") == 0) --argc, p = atof(*++argv);
 	}
 
-	p = p < 0 ? 0 : p > 1 ? 1 : p;
+	if (r <= 0 || c <= 0 || p <= 0) {
+		fprintf(
+			stderr, "xggen: invalid %s supplied\n",
+			r <= 0 ?
+				"rows" :
+				c <= 0 ?
+					"columns" :
+					"alive probability"
+		);
+		exit(1);
+	}
 
 	srand((unsigned)(getpid()));
 	printf("%dx%d\n", c, r);
