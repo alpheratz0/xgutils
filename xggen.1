@@ -1,31 +1,40 @@
-.TH XGGEN 1 "July 08, 2022"
-.SH NAME
-xggen \- gameoflife & xgameoflife compatible random board generator.
-.SH SYNOPSIS
-\fBxggen\fP [ -c COLUMNS ] [ -r ROWS ] [ -p ALIVE_PROBABILITY ]
-.SH OPTIONS
-.TP
-\fB\-c\fR
+.Dd August 5, 2022
+.Dt XGGEN 1
+.Sh NAME
+.Nm xggen
+.Nd board generator for xgameoflife/gameoflife
+.Sh SYNOPSIS
+.Nm
+.Op Fl hv
+.Op Fl c Ar COLUMNS
+.Op Fl r Ar ROWS
+.Op Fl p Ar ALIVE_PROBABILITY
+.Sh DESCRIPTION
+The
+.Nm
+utility lets you generate random boards that can be loaded from xgameoflife and gameoflife programs.
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h
+show usage
+.It Fl c
 set the number of generated columns
-.TP
-\fB\-r\fR
+.It Fl r
 set the number of generated rows
-.TP
-\fB\-r\fR
+.It Fl p
 set the probability of generating an alive cell
-.SH EXAMPLES
-.TP
-\fBgenerate a random 100x100 board\fR
+.It Fl v
+display the program version
+.El
+.Sh EXAMPLES
+.Bl -tag -width indent
+.It generate a random 100x100 board
 xggen -c 100 -r 100 -p 0.2 | xgameoflife -l /dev/stdin
-.SH AUTHOR
-Written by alpheratz0.
-.SH COPYRIGHT
-Copyright \(co 2022 <alpheratz99@protonmail.com>
-.br
-License GPLv2.0: GNU GPL version 2.0 <https://gnu.org/licenses/old-licenses/gpl-2.0.en.html>.
-.br
-This is free software: you are free to change and redistribute it.
-.br
-There is NO WARRANTY, to the extent permitted by law.
-.SH BUGS
+.El
+.Sh SEE ALSO
+.Xr xgameoflife 6
+.Xr gameoflife 6
+.Sh AUTHORS
+.An alpheratz0 Aq Mt alpheratz99@protonmail.com
+.Sh BUGS
 https://github.com/alpheratz0/xggen/issues
