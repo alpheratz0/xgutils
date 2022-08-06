@@ -43,7 +43,7 @@ frand(void)
 static void
 usage(void)
 {
-	puts("usage: xggen [-hv] [-c COLUMNS] [-r ROWS] [-p ALIVE_PROBABILITY]");
+	puts("usage: xggen [-hv] [-c columns] [-r rows] [-p alive_probability]");
 	exit(0);
 }
 
