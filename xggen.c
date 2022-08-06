@@ -72,7 +72,7 @@ main(int argc, char **argv)
 		else if (strcmp(*argv, "-p") == 0 && --argc > 0) p = atof(*++argv);
 	}
 
-	if (r <= 0 || c <= 0 || p <= 0) {
+	if (r <= 0 || c <= 0 || p < 0) {
 		fprintf(
 			stderr, "xggen: invalid %s supplied\n",
 			r <= 0 ?
