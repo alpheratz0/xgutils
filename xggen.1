@@ -29,9 +29,11 @@ display the program version
 .Sh EXAMPLES
 .Bl -tag -width indent
 .It generate a random 100x100 board
-xggen -c 100 -r 100 -p 0.2 | xgameoflife -l /dev/stdin
+xggen -c 100 -r 100 -p 0.2
 .It generate an empty 50x50 board
-xggen -c 50 -r 50 -p 0 | gameoflife -l /dev/stdin
+xggen -c 50 -r 50 -p 0
+.It generate a random board and load it into xgameoflife
+xggen -p 0.1 | xgameoflife -l /dev/stdin
 .El
 .Sh SEE ALSO
 .Xr xgameoflife 6
