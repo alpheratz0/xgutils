@@ -64,12 +64,12 @@ main(int argc, char **argv)
 	c = DEFAULT_COLUMNS;
 	p = DEFAULT_ALIVE_PROB;
 
-	for (--argc, ++argv; argc > 1; --argc, ++argv) {
+	while (++argv, --argc > 0) {
 		if (strcmp(*argv, "-h") == 0) usage();
 		else if (strcmp(*argv, "-v") == 0) version();
-		else if (strcmp(*argv, "-r") == 0) --argc, r = atoi(*++argv);
-		else if (strcmp(*argv, "-c") == 0) --argc, c = atoi(*++argv);
-		else if (strcmp(*argv, "-p") == 0) --argc, p = atof(*++argv);
+		else if (strcmp(*argv, "-r") == 0 && --argc > 0) r = atoi(*++argv);
+		else if (strcmp(*argv, "-c") == 0 && --argc > 0) c = atoi(*++argv);
+		else if (strcmp(*argv, "-p") == 0 && --argc > 0) p = atof(*++argv);
 	}
 
 	if (r <= 0 || c <= 0 || p <= 0) {
