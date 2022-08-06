@@ -30,6 +30,8 @@ display the program version
 .Bl -tag -width indent
 .It generate a random 100x100 board
 xggen -c 100 -r 100 -p 0.2 | xgameoflife -l /dev/stdin
+.It generate an empty 50x50 board
+xggen -c 50 -r 50 -p 0 | gameoflife -l /dev/stdin
 .El
 .Sh SEE ALSO
 .Xr xgameoflife 6
