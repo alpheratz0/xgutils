@@ -54,6 +54,17 @@ version(void)
 	exit(0);
 }
 
+static const char *
+enotnull(const char *str)
+{
+	if (NULL == str) {
+		fputs("xggen: argument cannot be null", stderr);
+		exit(1);
+	}
+
+	return str;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -65,11 +76,11 @@ main(int argc, char **argv)
 	p = DEFAULT_ALIVE_PROB;
 
 	while (++argv, --argc > 0) {
-		if (strcmp(*argv, "-h") == 0) usage();
-		else if (strcmp(*argv, "-v") == 0) version();
-		else if (strcmp(*argv, "-r") == 0 && --argc > 0) r = atoi(*++argv);
-		else if (strcmp(*argv, "-c") == 0 && --argc > 0) c = atoi(*++argv);
-		else if (strcmp(*argv, "-p") == 0 && --argc > 0) p = atof(*++argv);
+		if (!strcmp(*argv, "-h")) usage();
+		else if (!strcmp(*argv, "-v")) version();
+		else if (!strcmp(*argv, "-r")) --argc, r = atoi(enotnull(*++argv));
+		else if (!strcmp(*argv, "-c")) --argc, c = atoi(enotnull(*++argv));
+		else if (!strcmp(*argv, "-p")) --argc, p = atof(enotnull(*++argv));
 	}
 
 	if (r <= 0 || c <= 0 || p < 0) {
