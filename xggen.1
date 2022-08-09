@@ -1,4 +1,4 @@
-.Dd August 5, 2022
+.Dd August 9, 2022
 .Dt XGGEN 1
 .Sh NAME
 .Nm xggen
@@ -29,9 +29,9 @@ display the program version
 .Sh EXAMPLES
 .Bl -tag -width indent
 .It generate a random 100x100 board
-xggen -c 100 -r 100 -p 0.2
+xggen -c 100 -r 100 -p 0.2 > random.xg
 .It generate an empty 50x50 board
-xggen -c 50 -r 50 -p 0
+xggen -c 50 -r 50 -p 0 > random.xg
 .It generate a random board and load it into xgameoflife
 xggen -p 0.1 | xgameoflife -l /dev/stdin
 .El
