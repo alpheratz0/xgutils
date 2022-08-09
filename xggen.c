@@ -55,10 +55,10 @@ version(void)
 }
 
 static const char *
-enotnull(const char *str)
+enotnull(const char *str, const char *name)
 {
 	if (NULL == str) {
-		fputs("xggen: argument cannot be null", stderr);
+		fprintf(stderr, "xggen: %s cannot be null", name);
 		exit(1);
 	}
 
@@ -78,9 +78,9 @@ main(int argc, char **argv)
 	while (++argv, --argc > 0) {
 		if (!strcmp(*argv, "-h")) usage();
 		else if (!strcmp(*argv, "-v")) version();
-		else if (!strcmp(*argv, "-r")) --argc, r = atoi(enotnull(*++argv));
-		else if (!strcmp(*argv, "-c")) --argc, c = atoi(enotnull(*++argv));
-		else if (!strcmp(*argv, "-p")) --argc, p = atof(enotnull(*++argv));
+		else if (!strcmp(*argv, "-r")) --argc, r = atoi(enotnull(*++argv, "rows"));
+		else if (!strcmp(*argv, "-c")) --argc, c = atoi(enotnull(*++argv, "columns"));
+		else if (!strcmp(*argv, "-p")) --argc, p = atof(enotnull(*++argv, "alive probability"));
 	}
 
 	if (r <= 0 || c <= 0 || p < 0) {
