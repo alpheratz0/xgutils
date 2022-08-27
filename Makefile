@@ -1,13 +1,7 @@
 .POSIX:
 .PHONY: all clean install uninstall dist
 
-VERSION = 0.1.0
-
-CC      = cc
-CFLAGS  = -std=c99 -pedantic -Wall -Wextra -Os -DVERSION=\"$(VERSION)\"
-
-PREFIX    = /usr/local
-MANPREFIX = $(PREFIX)/share/man
+include config.mk
 
 all: xggen
 
@@ -27,7 +21,7 @@ install: all
 
 dist: clean
 	mkdir -p xggen-$(VERSION)
-	cp -R LICENSE Makefile README xggen.1 xggen.c xggen-$(VERSION)
+	cp -R LICENSE config.mk Makefile README xggen.1 xggen.c xggen-$(VERSION)
 	tar -cf xggen-$(VERSION).tar xggen-$(VERSION)
 	gzip xggen-$(VERSION).tar
 	rm -rf xggen-$(VERSION)
