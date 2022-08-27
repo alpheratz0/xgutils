@@ -1,6 +1,6 @@
 ]|~ xggen ~|[
 
-Generate random boards that are compatible with gameoflife & xgameoflife.
+Generate random boards that can be loaded from (x)gameoflife.
 
 ]|~ build ~|[
 
