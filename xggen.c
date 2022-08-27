@@ -98,15 +98,12 @@ main(int argc, char **argv)
 	srand((unsigned)(getpid()));
 	printf("%dx%d\n", c, r);
 
-	if (p != 0) {
-		for (y = 0; y < r; ++y) {
-			for (x = 0; x < c; ++x) {
-				if (frand() < p) {
-					printf("%d,%d\n", x, y);
-				}
-			}
-		}
-	}
+	if (p == 0) return 0;
+
+	for (y = 0; y < r; ++y)
+		for (x = 0; x < c; ++x)
+			if (frand() < p)
+				printf("%d,%d\n", x, y);
 
 	return 0;
 }
