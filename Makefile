@@ -21,7 +21,7 @@ install: all
 
 dist: clean
 	mkdir -p xggen-$(VERSION)
-	cp -R LICENSE config.mk Makefile README xggen.1 xggen.c xggen-$(VERSION)
+	cp -R COPYING config.mk Makefile README xggen.1 xggen.c xggen-$(VERSION)
 	tar -cf xggen-$(VERSION).tar xggen-$(VERSION)
 	gzip xggen-$(VERSION).tar
 	rm -rf xggen-$(VERSION)
