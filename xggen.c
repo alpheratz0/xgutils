@@ -27,12 +27,26 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <string.h>
 #include <unistd.h>
 
 #define DEFAULT_COLUMNS                    (300)
 #define DEFAULT_ROWS                       (300)
 #define DEFAULT_ALIVE_PROB                 (0.3)
+
+static void
+die(const char *fmt, ...)
+{
+	va_list args;
+
+	fputs("xggen: ", stderr);
+	va_start(args, fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	fputc('\n', stderr);
+	exit(1);
+}
 
 static inline float
 frand(void)
@@ -57,11 +71,8 @@ version(void)
 static const char *
 enotnull(const char *str, const char *name)
 {
-	if (NULL == str) {
-		fprintf(stderr, "xggen: %s cannot be null", name);
-		exit(1);
-	}
-
+	if (NULL == str)
+		die("%s cannot be null", name);
 	return str;
 }
 
@@ -76,24 +87,28 @@ main(int argc, char **argv)
 	p = DEFAULT_ALIVE_PROB;
 
 	while (++argv, --argc > 0) {
-		if (!strcmp(*argv, "-h")) usage();
-		else if (!strcmp(*argv, "-v")) version();
-		else if (!strcmp(*argv, "-r")) --argc, r = atoi(enotnull(*++argv, "rows"));
-		else if (!strcmp(*argv, "-c")) --argc, c = atoi(enotnull(*++argv, "columns"));
-		else if (!strcmp(*argv, "-p")) --argc, p = atof(enotnull(*++argv, "alive probability"));
+		if ((*argv)[0] == '-' && (*argv)[1] != '\0' && (*argv)[2] == '\0') {
+			switch ((*argv)[1]) {
+				case 'h': usage(); break;
+				case 'v': version(); break;
+				case 'r': --argc; r = atoi(enotnull(*++argv, "rows")); break;
+				case 'c': --argc; c = atoi(enotnull(*++argv, "columns")); break;
+				case 'p': --argc; p = atof(enotnull(*++argv, "alive probability")); break;
+				default: die("invalid option %s", *argv); break;
+			}
+		} else {
+			die("unexpected argument: %s", *argv);
+		}
 	}
 
-	if (r <= 0 || c <= 0 || p < 0) {
-		fprintf(
-			stderr, "xggen: invalid %s supplied\n",
-			r <= 0 ?
-				"rows" :
-				c <= 0 ?
-					"columns" :
-					"alive probability"
-		);
-		exit(1);
-	}
+	if (r <= 0)
+		die("invalid number of rows");
+
+	if (c <= 0)
+		die("invalid number of columns");
+
+	if (p < 0)
+		die("invalid live cell probability");
 
 	srand((unsigned)(getpid()));
 	printf("%dx%d\n", c, r);
