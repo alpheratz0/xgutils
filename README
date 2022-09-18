@@ -1,6 +1,6 @@
 ]|~ xggen ~|[
 
-Generate random boards that can be loaded from (x)gameoflife.
+Generate random gameoflife boards.
 
 ]|~ build ~|[
 
