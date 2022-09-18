@@ -1,6 +1,6 @@
 ]|~ xggen ~|[
 
-Generate random gameoflife boards.
+Random gameoflife board generator.
 
 ]|~ build ~|[
 
