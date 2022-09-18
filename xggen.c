@@ -48,12 +48,6 @@ die(const char *fmt, ...)
 	exit(1);
 }
 
-static inline float
-frand(void)
-{
-	return ((float)(rand())) / RAND_MAX;
-}
-
 static void
 usage(void)
 {
@@ -117,7 +111,7 @@ main(int argc, char **argv)
 
 	for (y = 0; y < r; ++y)
 		for (x = 0; x < c; ++x)
-			if (frand() < p)
+			if ((((float)(rand())) / RAND_MAX) < p)
 				printf("%d,%d\n", x, y);
 
 	return 0;
