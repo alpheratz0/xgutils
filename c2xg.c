@@ -16,50 +16,112 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #include <sys/file.h>
+
+#define DEFAULT_COLUMNS                    (300)
+#define DEFAULT_ROWS                       (300)
+
+static void
+die(const char *fmt, ...)
+{
+	va_list args;
+
+	fputs("c2xg: ", stderr);
+	va_start(args, fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	fputc('\n', stderr);
+	exit(1);
+}
+
+static void
+usage(void)
+{
+	puts("usage: c2xg [-hv] [-c columns] [-r rows] [cells_file]");
+	exit(0);
+}
+
+static void
+version(void)
+{
+	puts("c2xg version "VERSION);
+	exit(0);
+}
+
+static const char *
+enotnull(const char *str, const char *name)
+{
+	if (NULL == str)
+		die("%s cannot be null", name);
+	return str;
+}
 
 int
 main(int argc, char **argv)
 {
 	const char *cpath;
 	FILE *fp;
-	char c;
-	int x, y;
+	int x, y, r, c, ch;
 
-	if (argc < 2) return 1;
-
-	cpath = *++argv;
-	fp = fopen(cpath, "r");
+	r = DEFAULT_ROWS;
+	c = DEFAULT_COLUMNS;
+	cpath = NULL;
 	x = y = 0;
 
-	printf("1000x1000\n");
-
-	while ((c = getc(fp)) != EOF) {
-		if (c == '!')  {
-			while (1) {
-				c = getc(fp);
-				if (c == EOF)
-					return 0;
-
-				if (c == '\n') {
-					break;
-				}
+	while (++argv, --argc > 0) {
+		if ((*argv)[0] == '-' && (*argv)[1] != '\0' && (*argv)[2] == '\0') {
+			switch ((*argv)[1]) {
+				case 'h': usage(); break;
+				case 'v': version(); break;
+				case 'r': --argc; r = atoi(enotnull(*++argv, "rows")); break;
+				case 'c': --argc; c = atoi(enotnull(*++argv, "columns")); break;
+				default: die("invalid option %s", *argv); break;
 			}
-			continue;
+		} else {
+			if (cpath != NULL)
+				die("unexpected argument: %s", *argv);
+			cpath = *argv;
 		}
-
-		if (c == '\n') {
-			x = 0;
-			++y;
-			continue;
-		}
-
-		if (c == 'O') {
-			printf("%d,%d\n", x, y);
-		}
-
-		++x;
 	}
+
+	if (r <= 0)
+		die("invalid number of rows");
+
+	if (c <= 0)
+		die("invalid number of columns");
+
+	if (NULL == cpath)
+		die("you must specify a path");
+
+	if (NULL == (fp = fopen(cpath, "r")))
+		die("can't open file: %s", cpath);
+
+	printf("%dx%d\n", c, r);
+
+	while ((ch = getc(fp)) != EOF) {
+		switch (ch) {
+			case '!':
+				/* this is a comment, skip forward */
+				while ((ch = getc(fp)) != '\n')
+					if (ch == EOF)
+						goto end;
+				break;
+			case '\n':
+				++y, x = 0;
+				break;
+			case 'O':
+				printf("%d,%d\n", ++x, y);
+				break;
+			default:
+				++x;
+				break;
+		}
+	}
+
+end:
+	fclose(fp);
 
 	return 0;
 }
