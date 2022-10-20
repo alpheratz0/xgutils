@@ -1,0 +1,38 @@
+.Dd October 20, 2022
+.Dt C2XG 1
+.Sh NAME
+.Nm c2xg
+.Nd cells file to xgameoflife converter
+.Sh SYNOPSIS
+.Nm
+.Op Fl hv
+.Op Fl c Ar columns
+.Op Fl r Ar rows
+.Op Ar cells_file
+.Sh DESCRIPTION
+The
+.Nm
+utility lets you convert .cells files to one that can be loaded from xgameoflife and gameoflife.
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h
+show usage
+.It Fl c
+set the number of generated columns
+.It Fl r
+set the number of generated rows
+.It Fl v
+display the program version
+.El
+.Sh EXAMPLES
+.Bl -tag -width indent
+.It convert primer.cells file to .xg
+c2xg -c 1000 -r 1000 primer.cells > primer.xg
+.El
+.Sh SEE ALSO
+.Xr xgameoflife 6
+.Xr gameoflife 6
+.Sh AUTHORS
+.An alpheratz0 Aq Mt alpheratz99@protonmail.com
+.Sh BUGS
+https://github.com/alpheratz0/xgutils/issues
