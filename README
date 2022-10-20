@@ -1,8 +1,7 @@
-The xggen utility lets you generate random boards that can be loaded
-from xgameoflife and gameoflife programs.
-For more information about it's usage check `man xggen`.
+xgutils is a set of utilities to work with and to generate
+xgameoflife/gameoflife loadable boards. 
 
-In order to build this program you need to run `make`.
+In order to build all the utilities you need to run `make`.
 
 This program is free software; you can redistribute it
 and/or modify it under the terms of the GNU General Public License
