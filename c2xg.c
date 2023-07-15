@@ -15,6 +15,7 @@
 
 */
 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -95,8 +96,11 @@ main(int argc, char **argv)
 	if (NULL == cpath)
 		die("you must specify a path");
 
-	if (NULL == (fp = fopen(cpath, "r")))
+	if (strcmp(cpath, "-") == 0) {
+		fp = stdin;
+	} else if (NULL == (fp = fopen(cpath, "r"))) {
 		die("can't open file: %s", cpath);
+	}
 
 	printf("%dx%d\n", c, r);
 
