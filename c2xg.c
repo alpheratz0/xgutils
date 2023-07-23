@@ -74,11 +74,11 @@ main(int argc, char **argv)
 	while (++argv, --argc > 0) {
 		if ((*argv)[0] == '-' && (*argv)[1] != '\0' && (*argv)[2] == '\0') {
 			switch ((*argv)[1]) {
-				case 'h': usage(); break;
-				case 'v': version(); break;
-				case 'r': --argc; r = atoi(enotnull(*++argv, "rows")); break;
-				case 'c': --argc; c = atoi(enotnull(*++argv, "columns")); break;
-				default: die("invalid option %s", *argv); break;
+			case 'h': usage(); break;
+			case 'v': version(); break;
+			case 'r': --argc; r = atoi(enotnull(*++argv, "rows")); break;
+			case 'c': --argc; c = atoi(enotnull(*++argv, "columns")); break;
+			default: die("invalid option %s", *argv); break;
 			}
 		} else {
 			if (cpath != NULL)
@@ -106,21 +106,21 @@ main(int argc, char **argv)
 
 	while ((ch = getc(fp)) != EOF) {
 		switch (ch) {
-			case '!':
-				/* this is a comment, skip forward */
-				while ((ch = getc(fp)) != '\n')
-					if (ch == EOF)
-						goto end;
-				break;
-			case '\n':
-				++y, x = 0;
-				break;
-			case 'O':
-				printf("%d,%d\n", ++x, y);
-				break;
-			default:
-				++x;
-				break;
+		case '!':
+			/* this is a comment, skip forward */
+			while ((ch = getc(fp)) != '\n')
+				if (ch == EOF)
+					goto end;
+			break;
+		case '\n':
+			++y, x = 0;
+			break;
+		case 'O':
+			printf("%d,%d\n", ++x, y);
+			break;
+		default:
+			++x;
+			break;
 		}
 	}
 

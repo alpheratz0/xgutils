@@ -51,7 +51,8 @@ die(const char *fmt, ...)
 static void
 usage(void)
 {
-	puts("usage: xggen [-hv] [-c columns] [-r rows] [-p alive_probability]");
+	puts("usage: xggen [-hv] [-c columns] [-r rows]");
+	puts("             [-p alive_probability]");
 	exit(0);
 }
 
@@ -83,12 +84,12 @@ main(int argc, char **argv)
 	while (++argv, --argc > 0) {
 		if ((*argv)[0] == '-' && (*argv)[1] != '\0' && (*argv)[2] == '\0') {
 			switch ((*argv)[1]) {
-				case 'h': usage(); break;
-				case 'v': version(); break;
-				case 'r': --argc; r = atoi(enotnull(*++argv, "rows")); break;
-				case 'c': --argc; c = atoi(enotnull(*++argv, "columns")); break;
-				case 'p': --argc; p = atof(enotnull(*++argv, "alive probability")); break;
-				default: die("invalid option %s", *argv); break;
+			case 'h': usage(); break;
+			case 'v': version(); break;
+			case 'r': --argc; r = atoi(enotnull(*++argv, "rows")); break;
+			case 'c': --argc; c = atoi(enotnull(*++argv, "columns")); break;
+			case 'p': --argc; p = atof(enotnull(*++argv, "alive probability")); break;
+			default: die("invalid option %s", *argv); break;
 			}
 		} else {
 			die("unexpected argument: %s", *argv);
