@@ -28,7 +28,8 @@ install: all
 
 dist: clean
 	mkdir -p xgutils-$(VERSION)
-	cp -R COPYING config.mk Makefile README xggen.1 xggen.c c2xg.1 c2xg.c xgutils-$(VERSION)
+	cp -R COPYING config.mk Makefile README xggen.1 \
+		xggen.c c2xg.1 c2xg.c xgutils-$(VERSION)
 	tar -cf xgutils-$(VERSION).tar xgutils-$(VERSION)
 	gzip xgutils-$(VERSION).tar
 	rm -rf xgutils-$(VERSION)
