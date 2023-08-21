@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <sys/file.h>
+#include <sys/stat.h>
 
 #define DEFAULT_COLUMNS                    (300)
 #define DEFAULT_ROWS                       (300)
@@ -58,6 +59,17 @@ enotnull(const char *str, const char *name)
 	if (NULL == str)
 		die("%s cannot be null", name);
 	return str;
+}
+
+static int
+path_is_file(const char *path)
+{
+	struct stat sb;
+
+	if (stat(path, &sb) < 0 || !S_ISREG(sb.st_mode))
+		return 0;
+
+	return 1;
 }
 
 int
@@ -101,6 +113,8 @@ main(int argc, char **argv)
 		fp = stdin;
 	} else if (NULL == (fp = fopen(cpath, "r"))) {
 		die("can't open file: %s", cpath);
+	} else if (!path_is_file(cpath)) {
+		die("not a file: %s", cpath);
 	}
 
 	printf("%dx%d\n", c, r);
